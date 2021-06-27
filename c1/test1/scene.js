@@ -1,5 +1,3 @@
-// once everything is loaded, we run our Three.js stuff.
-
 const setCameraPosition = (c, s) => {
 	c.position.x = -30;
 	c.position.y = 40;
@@ -20,7 +18,10 @@ const setObjectPosition = (t, x, y, z) => {
 	t.position.z = z;
 };
 
+let step = 0;
+
 window.onload = () => {
+	const stats = initStats();
 	const scene = new THREE.Scene();
 	const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 	const renderer = new THREE.WebGLRenderer();
@@ -31,7 +32,7 @@ window.onload = () => {
 
 	renderer.setClearColor(0xffffff, 1.0);
 	renderer.setSize(stageWidth, stageHeight);
-	renderer.shadowMapEnabled = true;
+	renderer.shadowMap.enabled = true;
 
 	// 그림자 사용을 허용한다 1)
 	// 그림자를 생성시킬 객체 , => castShadow = true
@@ -74,5 +75,39 @@ window.onload = () => {
 
 	document.getElementById('WebGL-output').appendChild(renderer.domElement);
 
-	renderer.render(scene, camera);
+	const renderScene = () => {
+		stats.update();
+
+		cubeAnimation(cube);
+		sphereAnimation(sphere);
+
+		renderer.render(scene, camera);
+
+		requestAnimationFrame(renderScene);
+	};
+
+	renderScene();
+};
+
+const initStats = () => {
+	const stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.left = '0px';
+	stats.domElement.style.top = '0px';
+	document.getElementById('Stats-output').appendChild(stats.domElement);
+
+	return stats;
+};
+
+const cubeAnimation = (cube) => {
+	cube.rotation.x += 0.02;
+	cube.rotation.y += 0.03;
+	cube.rotation.z += 0.04;
+};
+
+const sphereAnimation = (sp) => {
+	step += 0.04;
+
+	sp.position.x = 20 + 12 * Math.cos(step);
+	sp.position.y = 2 + 10 * Math.abs(Math.sin(step));
 };
