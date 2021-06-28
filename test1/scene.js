@@ -1,3 +1,16 @@
+//test setting
+
+const controls = {
+	rotationSpeed: 0.02,
+	bouncingSpeed: 0.03
+};
+
+const gui = new dat.GUI();
+
+gui.add(controls, 'rotationSpeed', 0, 0.5);
+gui.add(controls, 'bouncingSpeed', 0, 0.5);
+
+//
 const setCameraPosition = (c, s) => {
 	c.position.x = -30;
 	c.position.y = 40;
@@ -100,13 +113,19 @@ const initStats = () => {
 };
 
 const cubeAnimation = (cube) => {
+	/*
 	cube.rotation.x += 0.02;
 	cube.rotation.y += 0.03;
 	cube.rotation.z += 0.04;
+	*/
+	cube.rotation.x += controls.rotationSpeed;
+	cube.rotation.y += controls.rotationSpeed;
+	cube.rotation.z += controls.rotationSpeed;
 };
 
 const sphereAnimation = (sp) => {
-	step += 0.04;
+	//step += 0.04;
+	step += controls.bouncingSpeed;
 
 	sp.position.x = 20 + 12 * Math.cos(step);
 	sp.position.y = 2 + 10 * Math.abs(Math.sin(step));
