@@ -19,6 +19,7 @@ window.onload = () => {
 	const camera = new THREE.PerspectiveCamera(45, stageWidth / stageHeight, 0.1, 1000);
 	const renderer = new THREE.WebGLRenderer();
 	
+	scene.overrideMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
 	
 	renderer.setClearColor(0xffffff, 1.0);
 	renderer.setSize(stageWidth, stageHeight);
