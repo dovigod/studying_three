@@ -23,6 +23,8 @@ window.onload = () => {
 		color: 0x00ff00
 	};
 
+	const stats = initStats();
+
 	let stageWidth = window.innerWidth;
 	let stageHeight = window.innerHeight;
 	const scene = new THREE.Scene();
@@ -52,7 +54,7 @@ window.onload = () => {
 	document.getElementById('stage').appendChild(renderer.domElement);
 
 	const animate =() => {
-
+		stats.update();
 		setObjPosition(camera, controls.cameraX, controls.cameraY, controls.cameraZ);
 		renderer.render(scene, camera);
 		requestAnimationFrame(animate);
@@ -64,4 +66,14 @@ const setObjPosition = (o, x, y, z) => {
 	o.position.x = x;
 	o.position.y = y;
 	o.position.z = z;
+};
+
+const initStats = () => {
+	const stats = new Stats();
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.left = '0px';
+	stats.domElement.style.top = '0px';
+	document.getElementById('stage').appendChild(stats.domElement);
+
+	return stats;
 };
