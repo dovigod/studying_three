@@ -40,11 +40,11 @@ window.onload = () => {
 
 
 
-	const spotLight = new THREE.SpotLight(0xffffff);
+	const spotLight = new THREE.SpotLight(0xaaaaaa);
 	spotLight.position.set(sl_pos.x,sl_pos.y,sl_pos.z);
 	spotLight.castShadow = true;
 
-
+	scene.fog = new THREE.Fog(0xfcfcfc , 0.15 , 80);
 	scene.add(plane);
 	scene.add(camera);
 	scene.add(ambientLight);
@@ -92,7 +92,11 @@ window.onload = () => {
 		}
 
 		outputObjects(){
-			console.log(scene.children);
+
+			for(let i = 0 ; i < scene.children.length ; i ++){
+				console.log(scene.children[i].type);
+			}
+			console.dir(scene.children);
 		}
 
 	}
@@ -127,7 +131,7 @@ window.onload = () => {
 	animate();
 };
 
-const setObjPosition = (o, x, y, z) => {
+const setObjPosition = (o, x, y, z) => { 
 	o.position.x = x;
 	o.position.y = y;
 	o.position.z = z;
